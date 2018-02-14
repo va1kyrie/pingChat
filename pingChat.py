@@ -71,7 +71,7 @@ def listenPing():
                 break
             else:
                 if str(srcIP) != listeningIP and icmpType != 0:
-                    msg[icmpSeqNumber] = str(data[28:])
+                    msg.insert(icmpSeqNumber, str(data[28:]))
                     #rec.write(data[28:] + "\r\n")
                     #print "SrcIP: " + str(srcIP) + " M:" + data[28:]
         except:
@@ -131,8 +131,9 @@ def sendPing(destIP, destFile):
     else:
         with open(destFile) as f:
             for line in f:
-                destMessage = line;
-                sentTime = sendMessage(destIP, destMessage)
+                ln = line.split(" ")
+                for word in ln:
+                    sentTime = sendMessage(destIP, word)
     return sentTime
 
 def main():
